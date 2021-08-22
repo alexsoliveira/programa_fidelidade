@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using AutoMapper;
+using WebApi.Config;
 
 namespace WebApi
 {
@@ -25,8 +27,10 @@ namespace WebApi
             services.AddDbContextPool<AppDbContext>(options =>            
                 options.UseMySql(mySqlConnection,
                     ServerVersion.AutoDetect(mySqlConnection)));
-
-            services.AddControllers();                        
+            services.AddIdentityConfiguration(Configuration);
+            services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
+            services.ResolveDependencies();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo (){ Title = "ApiFidelidade", Version = "v1" });
@@ -40,6 +44,8 @@ namespace WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseAuthentication();
 
             app.UseRouting();
 
