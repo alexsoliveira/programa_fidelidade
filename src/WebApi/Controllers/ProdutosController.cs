@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Business.Interfaces;
@@ -26,10 +27,17 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProdutoDTO>>> ObterTodos()
+        [HttpPost("listagem-produtos-disponivel-para-resgate")]
+        public async Task<ActionResult<IEnumerable<ProdutoDTO>>> ProdutosDisponivelResgate()
         {
-            var produtos =  _mapper.Map<IEnumerable<ProdutoDTO>>(await _produtoRepository.ObterTodos());
+            var produtos =  _mapper.Map<IEnumerable<ProdutoDTO>>(await _produtoService.ProdutosDisponivelResgate(p => p.Disponivel == true));
+            return Ok(produtos);
+        }
+
+        [HttpPost("resgate-produtos")]
+        public async Task<ActionResult<IEnumerable<ProdutoDTO>>> ResgateProdutos(Guid idProduto)
+        {
+            var produtos = _mapper.Map<IEnumerable<ProdutoDTO>>(await _produtoRepository.ObterPorId(idProduto));
 
             return Ok(produtos);
         }

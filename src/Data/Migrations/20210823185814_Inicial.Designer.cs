@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210822202604_Inicial")]
+    [Migration("20210823185814_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,6 +18,20 @@ namespace Data.Migrations
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.9");
+
+            modelBuilder.Entity("Business.Models.Pedido", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<bool>("StatusEntrega")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pedidos");
+                });
 
             modelBuilder.Entity("Business.Models.Produto", b =>
                 {
@@ -28,6 +42,9 @@ namespace Data.Migrations
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasColumnType("varchar(1000)");
+
+                    b.Property<bool>("Disponivel")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<int>("Estoque")
                         .HasColumnType("int");

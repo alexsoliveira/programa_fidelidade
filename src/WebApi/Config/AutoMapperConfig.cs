@@ -8,7 +8,9 @@ namespace WebApi.Config
     {
         public AutoMapperConfig()
         {                        
-            CreateMap<ProdutoDTO, Produto>();            
+            CreateMap<ProdutoDTO, Produto>();
+            CreateMap<PedidoDTO, Pedido>();
+            CreateMap<EnderecoDTO, Endereco>();
         }
     }
 }

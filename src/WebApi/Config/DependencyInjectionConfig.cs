@@ -15,14 +15,12 @@ namespace WebApi.Config
         public static IServiceCollection ResolveDependencies(this IServiceCollection services)
         {
             services.AddScoped<AppDbContext>();
-            services.AddScoped<IProdutoRepository, ProdutoRepository>();            
-                        
+            services.AddScoped<IProdutoRepository, ProdutoRepository>();
+            services.AddScoped<IPedidoRepository, PedidoRepository>();
+            services.AddScoped<IEnderecoRepository, EnderecoRepository>();
+
             services.AddScoped<IProdutoService, ProdutoService>();
-
-            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            //services.AddScoped<IUser, AspNetUser>();
-
-            //services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+            services.AddScoped<IPedidoService, PedidoService>();                        
 
             return services;
         }

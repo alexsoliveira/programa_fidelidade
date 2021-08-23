@@ -1,4 +1,9 @@
 ﻿using Business.Interfaces;
+using Business.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Business.Services
 {
@@ -14,6 +19,11 @@ namespace Business.Services
         public void Dispose()
         {
             _produtoRepository?.Dispose();
+        }
+
+        public Task<List<Produto>> ProdutosDisponivelResgate(Expression<Func<Produto, bool>> disponivel)
+        {
+            return _produtoRepository.ProdutosDisponivelResgate(disponivel);
         }
     }
 }

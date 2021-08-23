@@ -17,6 +17,20 @@ namespace Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.9");
 
+            modelBuilder.Entity("Business.Models.Pedido", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<bool>("StatusEntrega")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pedidos");
+                });
+
             modelBuilder.Entity("Business.Models.Produto", b =>
                 {
                     b.Property<Guid>("Id")
@@ -26,6 +40,9 @@ namespace Data.Migrations
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasColumnType("varchar(1000)");
+
+                    b.Property<bool>("Disponivel")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<int>("Estoque")
                         .HasColumnType("int");
