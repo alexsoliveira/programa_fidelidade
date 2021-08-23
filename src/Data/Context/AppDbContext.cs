@@ -9,6 +9,7 @@ namespace Data.Context
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
+        public DbSet<Conta> Contas { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
         

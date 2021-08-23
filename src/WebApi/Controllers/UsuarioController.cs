@@ -24,18 +24,21 @@ namespace WebApi.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly AppSettings _appSettings;
         private readonly IEnderecoRepository _enderecoRepository;
+        private readonly IContaRepository _contaRepository;
         private readonly IMapper _mapper;
 
         public UsuarioController(SignInManager<IdentityUser> signInManager,
                               UserManager<IdentityUser> userManager,
                               IOptions<AppSettings> appSettings,
                               IEnderecoRepository enderecoRepository,
+                              IContaRepository contaRepository,
                               IMapper mapper)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _appSettings = appSettings.Value;
             _enderecoRepository = enderecoRepository;
+            _contaRepository = contaRepository;
             _mapper = mapper;
         }
 
@@ -95,9 +98,10 @@ namespace WebApi.Controllers
         public async Task<ActionResult> ConsultarSaldoPontosExtrato(LoginUserDTO loginUser)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            // consultar saldo de pontos e extrato
-            
-            return Ok();
+
+            // consultar saldo de pontos e extrato            
+            var conta = _mapper.Map<ContaDTO>(await _contaRepository.Buscar(p => p.Email == loginUser.Email));
+            return Ok(conta.Saldo);
         }
 
         private string GerarJwt()
